@@ -19,4 +19,14 @@ export const reorderMembers = ({ commit, state }, payload) => {
   commit('setMembers', reorderedItems);
 };
 
-export const test = () => 1;
+export const removeMember = ({ commit, state }, payload) => {
+  const { members } = state;
+
+  // eslint-disable-next-line
+  const index = members.findIndex(el => el.id == payload.id);
+
+  if (index > -1) {
+    members.splice(index, 1);
+    commit('setMembers', members);
+  }
+};

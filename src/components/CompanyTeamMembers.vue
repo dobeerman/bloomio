@@ -1,55 +1,72 @@
 <template>
-  <b-table
-    :items="getMembers"
-    :fields="fields" class="team__list"
-    thead-class="hidden__header"
-  >
+  <div>
 
-    <template slot="order" slot-scope="data">
-      <span class="order__actions">
-        <span
-          @click.prevent="reorderMembers({idx: data.index, op: -1})"
-          :class="`order__icon order__up${data.index ? '' : ' disabled'}`"
-        ></span>
-        <span
-          @click.prevent="reorderMembers({idx: data.index, op: 1})"
-          :class="`order__icon order__down${
-            data.index === getMembers.length - 1 ? ' disabled' : ''
-          }`"
-        ></span>
-      </span>
-    </template>
+    <b-table
+      :items="getMembers"
+      :fields="fields" class="team__list"
+      thead-class="hidden__header"
+    >
 
-    <template slot="avatar" slot-scope="data">
-      <img
-        :src="data.item.avatar"
-        :alt="`${data.item.firstName} ${data.item.lastName}`"
-        class="team__list-avatar"
+      <template slot="order" slot-scope="data">
+        <span class="order__actions">
+          <span
+            @click.prevent="reorderMembers({idx: data.index, op: -1})"
+            :class="`order__icon order__up${data.index ? '' : ' disabled'}`"
+          ></span>
+          <span
+            @click.prevent="reorderMembers({idx: data.index, op: 1})"
+            :class="`order__icon order__down${
+              data.index === getMembers.length - 1 ? ' disabled' : ''
+            }`"
+          ></span>
+        </span>
+      </template>
+
+      <template slot="avatar" slot-scope="data">
+        <img
+          :src="data.item.avatar"
+          :alt="`${data.item.firstName} ${data.item.lastName}`"
+          class="team__list-avatar"
+          />
+      </template>
+
+      <template slot="name" slot-scope="data">
+        {{ data.item.firstName }} {{ data.item.lastName }}
+      </template>
+
+      <template slot="position" slot-scope="data">
+        {{ data.item.position }}
+      </template>
+
+      <template slot="profileComplete" slot-scope="data">
+        <incomplete-profile
+          :complete="data.item.complete"
+          no-progress-bar
         />
-    </template>
+      </template>
 
-    <template slot="name" slot-scope="data">
-      {{ data.item.firstName }} {{ data.item.lastName }}
-    </template>
+      <template slot="actions" slot-scope="data">
+        <b-button
+          :id="data.item.id"
+          class="action__button"
+          :disabled="data.item.admin"
+          @click.prevent="removeItemModal"
+        >Remove</b-button>
+        <b-button class="action__button">Edit</b-button>
+      </template>
 
-    <template slot="position" slot-scope="data">
-      {{ data.item.position }}
-    </template>
+    </b-table>
 
-    <template slot="profileComplete" slot-scope="data">
-      <incomplete-profile :complete="data.item.complete"></incomplete-profile>
-      <!-- {{ completeProfile(data.item.complete) }} -->
-    </template>
+    <b-modal
+      v-model="modalShow"
+      ok-title="Remove"
+      ok-variant="danger"
+      @ok="removeItemPermanently"
+    >
+      Are you sure to remove "{{ fullName }}"?
+    </b-modal>
+  </div>
 
-    <template slot="actions" slot-scope="data">
-      <b-button
-        class="action__button"
-        :disabled="data.item.admin"
-      >Remove</b-button>
-      <b-button class="action__button">Edit</b-button>
-    </template>
-
-  </b-table>
 </template>
 
 <script>
@@ -63,6 +80,10 @@ export default {
 
   data() {
     return {
+      member: {},
+
+      modalShow: false,
+
       fields: [
         'order',
         'avatar',
@@ -81,14 +102,28 @@ export default {
   },
 
   methods: {
-    ...mapActions(['reorderMembers']),
+    ...mapActions(['reorderMembers', 'removeMember']),
+
     completeProfile(value) {
       return value < 1 ? 'Incomplete profile' : '';
+    },
+
+    removeItemModal(e) {
+      this.member = this.getMember(e.target.id);
+      this.modalShow = true;
+    },
+
+    removeItemPermanently() {
+      this.removeMember({ id: this.member.id });
     },
   },
 
   computed: {
-    ...mapGetters(['getMembers']),
+    ...mapGetters(['getMembers', 'getMember']),
+
+    fullName() {
+      return `${this.member.firstName} ${this.member.lastName}`;
+    },
   },
 };
 </script>
