@@ -1,0 +1,154 @@
+@import '../font/css/rawline.css'
+
+$bgColor = white
+$greyColor = darkgrey
+$lightGrey = lightgrey
+$textColor = #1b1f21
+$tabActiveBGcolor = #c1df7f
+$progressColor = green
+$pinkAccent = #ed495f
+
+body
+  background-color: $bgColor
+  font-family: 'rawline', sans-serif
+
+.team
+
+  .team__title
+    color: $textColor
+    line-height: 30px
+    font-weight: 600
+    letter-spacing: 3.7px
+    text-transform: uppercase
+
+  .team__title-h2
+    font-size: 22px
+    margin-bottom: 2rem
+
+  .team__title-h3
+    font-size: 18px
+    letter-spacing: 2px
+    margin-bottom: 0
+    padding: 1rem 0
+
+  .team__list
+    tr
+      td
+        vertical-align: middle
+
+    .team__list-avatar
+      height: 48px
+      width: 48px
+      border-radius: 50%
+
+  .site__tabs
+
+    .nav-tabs
+      font-size: 14px
+      border-top: 1px solid $greyColor
+      border-bottom: 1px solid $greyColor
+      text-transform: uppercase
+
+      .nav-item
+        padding: 0
+        margin: 0
+
+        .nav-link
+          border: none
+          border-radius: 0
+          padding: 19px 24px
+          color: $textColor
+
+        .nav-link.active
+          background-color: $tabActiveBGcolor
+          font-weight: 600
+
+.navbar
+  padding: 0
+  border-bottom: 1px solid $greyColor
+  box-shadow: 0 1px 1px 0 $greyColor;
+  margin-bottom: 2rem;
+
+  .nav-item
+    font-weight: 600
+    margin: auto
+    text-transform: uppercase
+
+    .nav-#1b1f21
+      color: $textColor
+
+  .profile-completeness
+    font-size: .8rem
+    margin: auto
+    text-transform: initial;
+    font$textColor 300;
+
+    .dropdown-menu
+      font-size: .8rem
+
+.site-tabs
+
+  .nav-tabs
+    border-bottom: none
+    justify-content: space-evenly
+
+    .nav-link
+      border: none
+      text-transform: uppercase
+
+.hidden__header
+  display: none!important
+
+.text-right
+  text-align: right
+
+.action__button
+  background-color: white
+  border: 1px solid $tabActiveBGcolor
+  color: $tabActiveBGcolor
+  &:hover
+    border: 1px solid $tabActiveBGcolor
+    background-color: $tabActiveBGcolor
+    color: white
+  &:disabled
+    border: 1px solid $greyColor
+    background-color: white
+    color: $greyColor
+
+.profile__complete
+  color: $pinkAccent
+
+.order__actions
+  .order__icon
+    background-size: 12px
+    background-repeat: no-repeat
+    cursor: pointer;
+    display: block
+    height: 12px
+    width: 12px
+
+    &.order__up
+      background-image: url(../chevron-up.svg)
+      margin-bottom: 8px
+
+    &.order__down
+      background-image: url(../chevron-down.svg)
+
+    &.disabled
+      opacity: .2
+      cursor: auto
+
+.profile-completeness
+
+  .profile-completeness__text
+    margin-bottom: -2px;
+    display: block;
+
+  .profile-completeness__progress-wrapper
+    background-color: $lightGrey
+    width: 100%
+
+    .profile-completeness__progress-inner
+      background-color: $progressColor
+      height: 2px
+
