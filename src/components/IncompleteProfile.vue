@@ -3,7 +3,10 @@
     <span class="profile-completeness__text" :style="{color}">
       {{ text }}
     </span>
-    <div class="profile-completeness__progress-wrapper">
+    <div
+      class="profile-completeness__progress-wrapper"
+      v-if="!noProgressBar"
+    >
       <div
         class="profile-completeness__progress-inner"
         :style="{width}">
@@ -15,6 +18,10 @@
 <script>
 export default {
   props: {
+    noProgressBar: {
+      type: Boolean,
+      default: false,
+    },
     complete: {
       type: Number,
       default: 1,
@@ -23,12 +30,10 @@ export default {
       type: String,
       default: '#ed495f',
     },
-  },
-
-  data() {
-    return {
-      text: 'Profile incomplete',
-    };
+    text: {
+      type: String,
+      default: 'Profile incomplete',
+    },
   },
 
   computed: {
